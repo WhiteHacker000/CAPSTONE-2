@@ -6,7 +6,9 @@
 }
 
 .logo{ font-size: 1.5rem; 
-  font-weight: bold 
+  font-weight: bold;
+  font-family: "Brush Script MT", cursive;
+  font-size: 3rem
 }
 
 .navLinks{ list-style: none;
