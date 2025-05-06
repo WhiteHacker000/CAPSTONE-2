@@ -5,8 +5,8 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="logo">
-        <span className="logo-icon">TC</span>
-        <span className="logo-text">TrustChain</span>
+        <span className="logo-icon">PrC</span>
+        <span className="logo-text">PropConnect</span>
       </div>
       <ul className="nav-links">
         <li>Home</li>
