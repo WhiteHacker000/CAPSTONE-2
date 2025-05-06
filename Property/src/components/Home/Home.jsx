@@ -1,15 +1,38 @@
-import React from 'react';
-import Navbar from './Navbar/Navbar';
+import React, { useState } from 'react';
+import Navbar from '../Navbar/Navbar';
+import PropertyCard from '../Cards/PropertyCard/PropertyCard';
+import FeatureCard from '../Cards/FeatureCard/FeatureCard';
+import AgentCard from '../Cards/AgentCard/AgentCard';
+import TestimonialCard from '../Cards/TestimonialCard/TestimonialCard';
+import { featuredProperties } from '../../data/properties';
+import { trustFeatures } from '../../data/features';
+import { topAgents } from '../../data/agents';
+import { testimonials } from '../../data/testimonials';
+import Promote from '../../assets/Homepics/Promote.png';
 import './Home.css';
 
 function Home() {
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+
+  const handlePrevious = () => {
+    setCurrentTestimonial((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentTestimonial((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
+  };
+
+  const goToTestimonial = (index) => {
+    setCurrentTestimonial(index);
+  };
+
   return (
     <div className="home">
       <Navbar />
       <header className="home-header">
         <h1>Building Trust in Real Estate Connections</h1>
         <p>
-          PropConnect creates an ecosystem where verified identities, transparent
+          TrustChain creates an ecosystem where verified identities, transparent
           communications, and engagement metrics build the foundation for every
           successful property transaction.
         </p>
@@ -32,73 +55,81 @@ function Home() {
           <span>Chicago</span> <span>Miami</span>
         </p>
       </header>
-      
+
       <section className="featured-properties">
         <h2>Featured Verified Properties</h2>
         <p>Explore our selection of premium verified properties</p>
         <div className="property-cards">
-          <div className="property-card">
-            <div className="property-badge">Premium</div>
-            <img
-              src="https://via.placeholder.com/300x200"
-              alt="Modern Downtown Apartment"
-            />
-            <h3>Modern Downtown Apartment</h3>
-            <p className="price">$425,000</p>
-            <p className="location">123 Main St, New York, NY</p>
-            <div className="property-details">
-              <span>2 Beds</span>
-              <span>2 Baths</span>
-              <span>1,200 ft²</span>
-            </div>
-          </div>
-          <div className="property-card">
-            <div className="property-badge">Enhanced</div>
-            <img
-              src="https://via.placeholder.com/300x200"
-              alt="Suburban Family Home"
-            />
-            <h3>Suburban Family Home</h3>
-            <p className="price">$675,000</p>
-            <p className="location">456 Oak St, Los Angeles, CA</p>
-            <div className="property-details">
-              <span>4 Beds</span>
-              <span>3 Baths</span>
-              <span>2,400 ft²</span>
-            </div>
-          </div>
-          <div className="property-card">
-            <div className="property-badge">Basic</div>
-            <img
-              src="https://via.placeholder.com/300x200"
-              alt="Mountain View Cottage"
-            />
-            <h3>Mountain View Cottage</h3>
-            <p className="price">$320,000</p>
-            <p className="location">789 Pine Rd, Denver, CO</p>
-            <div className="property-details">
-              <span>3 Beds</span>
-              <span>2 Baths</span>
-              <span>1,800 ft²</span>
-            </div>
-          </div>
-          <div className="property-card">
-            <div className="property-badge">Premium</div>
-            <img
-              src="https://via.placeholder.com/300x200"
-              alt="Waterfront Luxury Villa"
-            />
-            <h3>Waterfront Luxury Villa</h3>
-            <p className="price">$1,250,000</p>
-            <p className="location">101 Harbor Dr, Miami, FL</p>
-            <div className="property-details">
-              <span>5 Beds</span>
-              <span>4 Baths</span>
-              <span>3,600 ft²</span>
-            </div>
-          </div>
+          {featuredProperties.map(property => (
+            <PropertyCard key={property.id} property={property} />
+          ))}
         </div>
         <button className="view-all-button">View All Properties</button>
+      </section>
+
+      <section className="trust-features">
+        <h2>Building Trust in Every Transaction</h2>
+        <p>
+          TrustChain's unique features are designed to enhance transparency,
+          verify identities, and foster meaningful connections in the real
+          estate market.
+        </p>
+        <div className="feature-cards">
+          {trustFeatures.map(feature => (
+            <FeatureCard key={feature.id} feature={feature} />
+          ))}
+        </div>
+      </section>
+
+      <section className="verified-agents">
+        <h2>Meet Our Top Verified Agents</h2>
+        <p>
+          Connect with our most responsive and highly-rated real estate professionals.
+        </p>
+        <div className="agent-cards">
+          {topAgents.map(agent => (
+            <AgentCard key={agent.id} agent={agent} />
+          ))}
+        </div>
+        <button className="view-all-button">View All Agents</button>
+      </section>
+
+      <section 
+        className="testimonials" 
+        style={{
+          background: `linear-gradient(rgba(26, 43, 80, 0.9), rgba(26, 43, 80, 0.95)), url(${Promote})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed'
+        }}
+      >
+        <h2>What Our Users Say</h2>
+        <p>
+          Real experiences from real people who have built successful real estate connections through
+          TrustChain
+        </p>
+        
+        <div className="testimonial-slider">
+          {testimonials.map((testimonial, index) => (
+            <TestimonialCard 
+              key={testimonial.id}
+              testimonial={testimonial}
+              isActive={currentTestimonial === index}
+              onPrev={handlePrevious}
+              onNext={handleNext}
+            />
+          ))}
+        </div>
+        
+        <div className="slider-dots">
+          {testimonials.map((_, index) => (
+            <button 
+              key={index}
+              className={`dot ${currentTestimonial === index ? 'active' : ''}`} 
+              onClick={() => goToTestimonial(index)}
+            ></button>
+          ))}
+        </div>
       </section>
     </div>
   );
