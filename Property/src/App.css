@@ -10,7 +10,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #34495e; /* Darker navbar */
+  background-color: #19204fe2; /* Darker navbar */
   color: #ecf0f1; /* Light text */
 }
 
@@ -62,7 +62,7 @@ body {
   border: 1px solid #ccc;
   padding: 5px 10px;
   border-radius: 5px;
-  color: #1a2b50;
+  color: #5d7779;
   cursor: pointer;
 }
 

@@ -8,7 +8,7 @@ function Footer() {
       <div className="footer-content">
         <div className="footer-brand">
           <div className="footer-logo">
-            <span className="logo-icon">TC</span>
+            <span className="logo-icon">PC</span>
             <span className="logo-text">PropConnect</span>
           </div>
           <p className="footer-description">
