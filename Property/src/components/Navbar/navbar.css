@@ -76,12 +76,13 @@
 }
 
 .logo-text {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 1000; /* Increased from 700 */
   color: #f8f8f8; /* Darker color for better contrast */
   transition: all 0.3s ease;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15); /* Enhanced text shadow */
   letter-spacing: -0.5px;
+  font-family: Cursive, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
 
 .logo:hover .logo-text {
