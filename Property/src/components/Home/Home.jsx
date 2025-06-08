@@ -32,7 +32,7 @@ function Home() {
       <header className="home-header">
         <h1>Building Trust in Real Estate Connections</h1>
         <p>
-          TrustChain creates an ecosystem where verified identities, transparent
+          PropConnect creates an ecosystem where verified identities, transparent
           communications, and engagement metrics build the foundation for every
           successful property transaction.
         </p>
@@ -70,7 +70,7 @@ function Home() {
       <section className="trust-features">
         <h2>Building Trust in Every Transaction</h2>
         <p>
-          TrustChain's unique features are designed to enhance transparency,
+          PropConnect's unique features are designed to enhance transparency,
           verify identities, and foster meaningful connections in the real
           estate market.
         </p>
@@ -106,7 +106,7 @@ function Home() {
         <h2>What Our Users Say</h2>
         <p>
           Real experiences from real people who have built successful real estate connections through
-          TrustChain
+          PropConnect.
         </p>
         
         <div className="testimonial-slider">
