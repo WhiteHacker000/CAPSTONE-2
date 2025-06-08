@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import PropertyCard from '../Cards/PropertyCard/PropertyCard';
 import { featuredProperties } from '../../data/properties';
-import './PropertyListing.css';
+import './Property_Listing.css';
 
-function PropertyListing() {
+function Property_Listing() {
   const [properties, setProperties] = useState(featuredProperties || []);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -222,4 +222,4 @@ function PropertyListing() {
   );
 }
 
-export default PropertyListing;
+export default Property_Listing;

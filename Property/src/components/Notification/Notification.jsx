@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { FaCheck, FaTrash, FaRegBell, FaFilter } from 'react-icons/fa';
-import './Notifications.css';
+import './Notification.css';
 
-function Notifications() {
+function Notification() {
   const [notifications, setNotifications] = useState([
     {
       id: 1,
@@ -197,4 +197,4 @@ function Notifications() {
   );
 }
 
-export default Notifications;
+export default Notification;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from './Navbar/Navbar';
-import Footer from './Footer/Footer';
+import Navbar from '../Navbar/Navbar';
+import Footer from '../Footer/Footer';
 import PropertyCard from '../Cards/PropertyCard/PropertyCard';
 import FeatureCard from '../Cards/FeatureCard/FeatureCard';
 import AgentCard from '../Cards/AgentCard/AgentCard';

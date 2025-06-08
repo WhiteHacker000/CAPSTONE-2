@@ -2,9 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { featuredProperties } from '../../data/properties';
-import './PropertyDetail.css';
+import './Property_Detail.css';
 
-function PropertyDetail() {
+function Property_Detail() {
   const { id } = useParams();
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -131,4 +131,4 @@ function PropertyDetail() {
   );
 }
 
-export default PropertyDetail;
+export default Property_Detail;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './PropertyCard.css';
+import './Property.css';
 
 
 function PropertyCard({ property }) {
