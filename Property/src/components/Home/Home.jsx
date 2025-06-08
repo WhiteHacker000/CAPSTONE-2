@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
+import Footer from '../Footer/Footer';
 import PropertyCard from '../Cards/PropertyCard/PropertyCard';
 import FeatureCard from '../Cards/FeatureCard/FeatureCard';
 import AgentCard from '../Cards/AgentCard/AgentCard';
@@ -9,10 +11,14 @@ import { trustFeatures } from '../../data/features';
 import { topAgents } from '../../data/agents';
 import { testimonials } from '../../data/testimonials';
 import Promote from '../../assets/Homepics/Promote.png';
+import Promise from '../../assets/Homepics/Promise.jpg';
 import './Home.css';
 
 function Home() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [searchType, setSearchType] = useState('properties'); // 'properties' or 'agents'
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
 
   const handlePrevious = () => {
     setCurrentTestimonial((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
@@ -26,10 +32,41 @@ function Home() {
     setCurrentTestimonial(index);
   };
 
+  const handleSearchTypeChange = (type) => {
+    setSearchType(type);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSearchSubmit = () => {
+    if (searchTerm.trim()) {
+      // Navigate to the appropriate page with search query
+      navigate(`/${searchType}?search=${encodeURIComponent(searchTerm)}`);
+    }
+  };
+
+  const handlePopularSearch = (term) => {
+    setSearchTerm(term);
+    navigate(`/${searchType}?search=${encodeURIComponent(term)}`);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearchSubmit();
+    }
+  };
+
   return (
     <div className="home">
-      <Navbar />
-      <header className="home-header">
+
+      <header className="home-header" style={{
+        background: `linear-gradient(rgba(26, 43, 80, 0.85), rgba(26, 43, 80, 0.9)), url(${Promise})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'scroll'
+      }}>
         <h1>Building Trust in Real Estate Connections</h1>
         <p>
           PropConnect creates an ecosystem where verified identities, transparent
@@ -38,21 +75,37 @@ function Home() {
         </p>
         <div className="search-section">
           <div className="search-buttons">
-            <button className="find-properties active">Find Properties</button>
-            <button className="find-agents">Find Agents</button>
+            <button 
+              className={`find-properties ${searchType === 'properties' ? 'active' : ''}`}
+              onClick={() => handleSearchTypeChange('properties')}
+            >
+              Find Properties
+            </button>
+            <button 
+              className={`find-agents ${searchType === 'agents' ? 'active' : ''}`}
+              onClick={() => handleSearchTypeChange('agents')}
+            >
+              Find Agents
+            </button>
           </div>
           <div className="search-bar-container">
             <input
               type="text"
               placeholder="Enter location, zipcode, or address"
               className="search-input"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              onKeyPress={handleKeyPress}
             />
-            <button className="search-button">Search</button>
+            <button className="search-button" onClick={handleSearchSubmit}>Search</button>
           </div>
         </div>
         <p className="popular-searches">
-          Popular searches: <span>New York</span> <span>Los Angeles</span>{' '}
-          <span>Chicago</span> <span>Miami</span>
+          Popular searches: 
+          <span onClick={() => handlePopularSearch('New York')}>New York</span> 
+          <span onClick={() => handlePopularSearch('Los Angeles')}>Los Angeles</span> 
+          <span onClick={() => handlePopularSearch('Chicago')}>Chicago</span> 
+          <span onClick={() => handlePopularSearch('Miami')}>Miami</span>
         </p>
       </header>
 
@@ -106,7 +159,7 @@ function Home() {
         <h2>What Our Users Say</h2>
         <p>
           Real experiences from real people who have built successful real estate connections through
-          PropConnect.
+          PropConnect
         </p>
         
         <div className="testimonial-slider">
@@ -131,6 +184,7 @@ function Home() {
           ))}
         </div>
       </section>
+
     </div>
   );
 }

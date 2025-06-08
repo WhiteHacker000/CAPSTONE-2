@@ -1,0 +1,25 @@
+.property-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.property-card-link:hover {
+  transform: translateY(-5px);
+}
+
+.property-card {
+  position: relative;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 300px;
+  text-align: left;
+  transition: box-shadow 0.3s ease;
+}
+
+.property-card-link:hover .property-card {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}

@@ -1,0 +1,388 @@
+.property-detail-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+}
+
+.property-header {
+  padding: 40px 0 20px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.property-header-content {
+  max-width: 1000px;
+}
+
+.badge-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.property-badge {
+  font-size: 0.75rem;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.property-badge.premium {
+  background-color: #1a2b50;
+  color: white;
+}
+
+.property-badge.enhanced {
+  background-color: #2563eb;
+  color: white;
+}
+
+.property-badge.basic {
+  background-color: #6b7280;
+  color: white;
+}
+
+.property-status {
+  background-color: #10b981;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.property-title {
+  font-size: 2.5rem;
+  color: #1a2b50;
+  margin-bottom: 10px;
+}
+
+.property-location {
+  font-size: 1.1rem;
+  color: #6b7280;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.property-price-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 25px 0;
+}
+
+.property-price {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a2b50;
+}
+
+.property-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.action-button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.action-button.favorite {
+  background-color: rgba(26, 43, 80, 0.1);
+  color: #1a2b50;
+}
+
+.action-button.share {
+  background-color: white;
+  color: #1a2b50;
+  border: 1px solid #e0e0e0;
+}
+
+.action-button:hover {
+  transform: translateY(-2px);
+}
+
+.property-content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 30px;
+}
+
+.gallery-section {
+  width: 100%;
+}
+
+.main-image {
+  width: 100%;
+  height: 500px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.main-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumbnail-row {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.thumbnail {
+  width: 100px;
+  height: 70px;
+  border-radius: 6px;
+  object-fit: cover;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.thumbnail.active {
+  opacity: 1;
+  border: 2px solid #1a2b50;
+}
+
+.property-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background-color: #f8fafc;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.detail-item:hover {
+  transform: translateY(-5px);
+}
+
+.detail-icon {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.detail-label {
+  color: #6b7280;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.detail-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1a2b50;
+}
+
+.property-description,
+.property-features {
+  margin: 20px 0;
+}
+
+.property-description h2,
+.property-features h2,
+.contact-agent h2 {
+  font-size: 1.5rem;
+  color: #1a2b50;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.property-description h2:after,
+.property-features h2:after,
+.contact-agent h2:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: #1a2b50;
+  border-radius: 2px;
+}
+
+.property-description p {
+  line-height: 1.8;
+  color: #4b5563;
+  font-size: 1.05rem;
+}
+
+.features-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+  padding: 0;
+  list-style: none;
+}
+
+.features-list li {
+  position: relative;
+  padding-left: 30px;
+  line-height: 1.7;
+  color: #4b5563;
+}
+
+.features-list li:before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #1a2b50;
+  font-weight: bold;
+}
+
+.contact-agent {
+  margin-top: 40px;
+}
+
+.agent-card {
+  background-color: #f8fafc;
+  border-radius: 12px;
+  padding: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.agent-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.agent-avatar {
+  width: 70px;
+  height: 70px;
+  background-color: #1a2b50;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.agent-details h3 {
+  font-size: 1.3rem;
+  margin-bottom: 5px;
+  color: #1a2b50;
+}
+
+.agent-details p {
+  color: #6b7280;
+  margin: 3px 0;
+}
+
+.agent-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contact-button {
+  padding: 10px 25px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+  min-width: 150px;
+}
+
+.contact-button.primary {
+  background-color: #1a2b50;
+  color: white;
+}
+
+.contact-button.secondary {
+  background-color: white;
+  border: 1px solid #1a2b50;
+  color: #1a2b50;
+}
+
+.contact-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  font-size: 1.2rem;
+  color: #6b7280;
+}
+
+.not-found-container {
+  text-align: center;
+  padding: 60px 0;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.back-button {
+  display: inline-block;
+  background-color: #1a2b50;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
+  text-decoration: none;
+  margin-top: 20px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #2c3e50;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .property-title {
+    font-size: 2rem;
+  }
+  
+  .property-price-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  
+  .main-image {
+    height: 350px;
+  }
+  
+  .agent-card {
+    flex-direction: column;
+    gap: 25px;
+  }
+  
+  .agent-actions {
+    width: 100%;
+  }
+}
