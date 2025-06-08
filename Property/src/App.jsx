@@ -4,10 +4,10 @@ import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home/home';
 import About from './components/About/About';
 import Contact from './components/Contact/Contact';
-import PropertyListing from './components/PropertyListing/PropertyListing';
-import PropertyDetail from './components/PropertyDetail/PropertyDetail';
+import PropertyListing from './components/Property_Listing/Property_Listing';
+import PropertyDetail from './components/Property_Detail/Property_Detail';
 import Agents from './components/Agents/Agents';
-import Notifications from './components/Notifications/Notifications'; // Add this import
+import Notifications from './components/Notification/Notification'; // Add this import
 import Footer from './components/Footer/Footer';
 import './App.css';
 
