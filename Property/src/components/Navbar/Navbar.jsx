@@ -1,31 +1,48 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaBell, FaUserCircle } from 'react-icons/fa';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import './Navbar.css';
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userId, setUserId] = useState(null);
   const location = useLocation();
-  
+  const navigate = useNavigate();
+  const auth = getAuth();
+
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 20);
     };
-    
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Check if link is active
-  const isActive = (path) => {
-    return location.pathname === path;
+  // Track auth state
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUserId(currentUser);
+    });
+    return () => unsubscribe();
+  }, [auth]);
+
+  // Handle logout
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setUserId(null);
+      navigate('/');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   };
+
+  // Check active link
+  const isActive = (path) => location.pathname === path;
 
   return (
     <nav className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
@@ -34,42 +51,23 @@ function Navbar() {
           <div className="logo-icon">PC</div>
           <span className="logo-text">PropConnect</span>
         </Link>
-        
+
         <div className={`nav-menu ${mobileMenuOpen ? 'active' : ''}`}>
           <ul className="nav-links">
-            <li>
-              <Link to="/" className={isActive('/') ? 'active' : ''}>
-                Home
-                {isActive('/') && <span className="nav-indicator"></span>}
-              </Link>
-            </li>
-            <li>
-              <Link to="/properties" className={isActive('/properties') ? 'active' : ''}>
-                Listings
-                {isActive('/properties') && <span className="nav-indicator"></span>}
-              </Link>
-            </li>
-            <li>
-              <Link to="/agents" className={isActive('/agents') ? 'active' : ''}>
-                Agents
-                {isActive('/agents') && <span className="nav-indicator"></span>}
-              </Link>
-            </li>
-            <li>
-              <Link to="/about" className={isActive('/about') ? 'active' : ''}>
-                About
-                {isActive('/about') && <span className="nav-indicator"></span>}
-              </Link>
-            </li>
-            <li>
-              <Link to="/contact" className={isActive('/contact') ? 'active' : ''}>
-                Contact
-                {isActive('/contact') && <span className="nav-indicator"></span>}
-              </Link>
-            </li>
+            {['/', '/properties', '/agents', '/about', '/contact'].map((path, index) => {
+              const names = ['Home', 'Listings', 'Agents', 'About', 'Contact'];
+              return (
+                <li key={path}>
+                  <Link to={path} className={isActive(path) ? 'active' : ''}>
+                    {names[index]}
+                    {isActive(path) && <span className="nav-indicator"></span>}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </div>
-        
+
         <div className="nav-actions">
           <div className="notification-container">
             <Link to="/notifications">
@@ -77,13 +75,24 @@ function Navbar() {
               <span className="notification-badge">3</span>
             </Link>
           </div>
-          
-          <div className="auth-buttons">
-            <button className="sign-in">Sign In</button>
-            <button className="sign-up">Sign Up</button>
-          </div>
+
+          {userId ? (
+            <div className="user-logged-in">
+              <FaUserCircle className="user-icon" />
+              <button className="logout-btn" onClick={handleLogout}>Logout</button>
+            </div>
+          ) : (
+            <div className="auth-buttons">
+              <Link to="/login">
+                <button className="sign-in">Sign In</button>
+              </Link>
+              <Link to="/signup">
+                <button className="sign-up">Sign Up</button>
+              </Link>
+            </div>
+          )}
         </div>
-        
+
         <div 
           className={`hamburger ${mobileMenuOpen ? 'active' : ''}`}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
