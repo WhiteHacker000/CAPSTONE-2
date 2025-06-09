@@ -31,8 +31,8 @@ function Navbar() {
     <nav className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
       <div className="navbar-container">
         <Link to="/" className="logo">
-          <div className="logo-icon">TC</div>
-          <span className="logo-text">TrustChain</span>
+          <div className="logo-icon">PC</div>
+          <span className="logo-text">PropConnect</span>
         </Link>
         
         <div className={`nav-menu ${mobileMenuOpen ? 'active' : ''}`}>
