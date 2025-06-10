@@ -22,10 +22,10 @@ function Property_Listing() {
   const searchQuery = new URLSearchParams(location.search).get('search');
   
   useEffect(() => {
-    // In a real app, you would fetch properties from an API
-    // For now, we'll use the local data and filter based on search query
+    setLoading(true);
     let filteredProperties = [...featuredProperties];
     
+    // Apply search query filter
     if (searchQuery) {
       filteredProperties = filteredProperties.filter(property => 
         property.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -33,11 +33,70 @@ function Property_Listing() {
       );
     }
     
-    // Apply any additional filters here
+    // Apply price range filter
+    if (filters.priceRange !== 'Any Price') {
+      const [min, max] = filters.priceRange.split(' - ').map(price => 
+        parseInt(price.replace(/[^0-9]/g, ''))
+      );
+      filteredProperties = filteredProperties.filter(property => {
+        const propertyPrice = parseInt(property.price.replace(/[^0-9]/g, ''));
+        if (max) {
+          return propertyPrice >= min && propertyPrice <= max;
+        } else {
+          return propertyPrice >= min;
+        }
+      });
+    }
+    
+    // Apply bedrooms filter
+    if (filters.bedrooms !== 'Any') {
+      const minBeds = parseInt(filters.bedrooms);
+      filteredProperties = filteredProperties.filter(property => {
+        const beds = parseInt(property.beds || property.details?.beds?.split(' ')[0] || '0');
+        return beds >= minBeds;
+      });
+    }
+    
+    // Apply property type filter
+    if (filters.propertyType !== 'Any') {
+      filteredProperties = filteredProperties.filter(property => 
+        property.type === filters.propertyType
+      );
+    }
+    
+    // Apply verification filter
+    if (filters.verification !== 'Any') {
+      filteredProperties = filteredProperties.filter(property => 
+        property.verified === (filters.verification === 'Verified')
+      );
+    }
+    
+    // Apply sorting
+    switch (sortOption) {
+      case 'price-asc':
+        filteredProperties.sort((a, b) => {
+          const priceA = parseInt(a.price.replace(/[^0-9]/g, ''));
+          const priceB = parseInt(b.price.replace(/[^0-9]/g, ''));
+          return priceA - priceB;
+        });
+        break;
+      case 'price-desc':
+        filteredProperties.sort((a, b) => {
+          const priceA = parseInt(a.price.replace(/[^0-9]/g, ''));
+          const priceB = parseInt(b.price.replace(/[^0-9]/g, ''));
+          return priceB - priceA;
+        });
+        break;
+      case 'newest':
+        filteredProperties.sort((a, b) => new Date(b.date) - new Date(a.date));
+        break;
+      default:
+        break;
+    }
     
     setProperties(filteredProperties);
     setLoading(false);
-  }, [searchQuery, filters]);
+  }, [searchQuery, filters, sortOption]);
   
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -154,59 +213,60 @@ function Property_Listing() {
       
       {/* Property Grid */}
       <div className="property-grid">
-        {properties.map(property => (
-          <Link 
-            to={`/properties/${property.id}`} 
-            key={property.id} 
-            className="property-card"
-            data-status={property.status || "For Sale"} // Add this attribute
-          >
-            <div className="property-image-container">
-              <span className={`property-badge ${property.badge.toLowerCase()}`}>{property.badge}</span>
-              <button 
-                className="favorite-button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleFavorite(property.id);
-                }}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                  <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                </svg>
-              </button>
-              <img src={property.image} alt={property.title} />
-            </div>
-            
-            <div className="property-content">
-              <h3 className="property-title">{property.title}</h3>
-              <div className="property-price">{property.price}</div>
-              <div className="property-location">
-                <span className="location-icon">📍</span>
-                {property.location}
+        {loading ? (
+          <div className="loading">Loading...</div>
+        ) : properties.length === 0 ? (
+          <div className="no-results">No properties found matching your criteria</div>
+        ) : (
+          properties.map(property => (
+            <Link 
+              to={`/properties/${property.id}`} 
+              key={property.id} 
+              className="property-card"
+              data-status={property.status || "For Sale"}
+            >
+              <div className="property-image-container">
+                <span className={`property-badge ${property.badge.toLowerCase()}`}>{property.badge}</span>
+                <button 
+                  className="favorite-button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleFavorite(property.id);
+                  }}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                  </svg>
+                </button>
+                <img src={property.image} alt={property.title} />
               </div>
               
-              <div className="property-specs">
-                <span>
-                  <span className="spec-icon">🛏️</span>
-                  {property.beds || property.details?.beds?.split(' ')[0] || '2'} Beds
-                </span>
-                <span>
-                  <span className="spec-icon">🚿</span>
-                  {property.baths || property.details?.baths?.split(' ')[0] || '2'} Baths
-                </span>
-                <span>
-                  <span className="spec-icon">📏</span>
-                  {property.area || property.details?.area?.split(' ')[0] || '1,200'} ft²
-                </span>
+              <div className="property-content">
+                <h3 className="property-title">{property.title}</h3>
+                <div className="property-price">{property.price}</div>
+                <div className="property-location">
+                  <span className="location-icon">📍</span>
+                  {property.location}
+                </div>
+                
+                <div className="property-specs">
+                  <span>
+                    <span className="spec-icon">🛏️</span>
+                    {property.beds || property.details?.beds?.split(' ')[0] || '2'} Beds
+                  </span>
+                  <span>
+                    <span className="spec-icon">🚿</span>
+                    {property.baths || property.details?.baths?.split(' ')[0] || '2'} Baths
+                  </span>
+                  <span>
+                    <span className="spec-icon">📏</span>
+                    {property.area || property.details?.area?.split(' ')[0] || '1,200'} ft²
+                  </span>
+                </div>
               </div>
-              
-              <p className="view-count">
-                <span className="view-icon">👁️</span>
-                {Math.floor(Math.random() * 300) + 100} views
-              </p>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))
+        )}
       </div>
       
       {/* Pagination */}
