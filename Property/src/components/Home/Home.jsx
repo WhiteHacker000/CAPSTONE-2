@@ -16,9 +16,13 @@ import './Home.css';
 
 function Home() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
-  const [searchType, setSearchType] = useState('properties'); // 'properties' or 'agents'
+  const [searchType, setSearchType] = useState('properties');
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
+
+  // Get only first 6 properties and agents
+  const displayedProperties = featuredProperties.slice(0, 6);
+  const displayedAgents = topAgents.slice(0, 6);
 
   const handlePrevious = () => {
     setCurrentTestimonial((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
@@ -42,7 +46,6 @@ function Home() {
 
   const handleSearchSubmit = () => {
     if (searchTerm.trim()) {
-      // Navigate to the appropriate page with search query
       navigate(`/${searchType}?search=${encodeURIComponent(searchTerm)}`);
     }
   };
@@ -58,9 +61,16 @@ function Home() {
     }
   };
 
+  const handleViewMoreProperties = () => {
+    navigate('/properties');
+  };
+
+  const handleViewMoreAgents = () => {
+    navigate('/agents');
+  };
+
   return (
     <div className="home">
-
       <header className="home-header" style={{
         background: `linear-gradient(rgba(26, 43, 80, 0.85), rgba(26, 43, 80, 0.9)), url(${Promise})`,
         backgroundSize: 'cover',
@@ -113,11 +123,13 @@ function Home() {
         <h2>Featured Verified Properties</h2>
         <p>Explore our selection of premium verified properties</p>
         <div className="property-cards">
-          {featuredProperties.map(property => (
+          {displayedProperties.map(property => (
             <PropertyCard key={property.id} property={property} />
           ))}
         </div>
-        <button className="view-all-button">View All Properties</button>
+        <button className="view-all-button" onClick={handleViewMoreProperties}>
+          View All Properties
+        </button>
       </section>
 
       <section className="trust-features">
@@ -140,11 +152,13 @@ function Home() {
           Connect with our most responsive and highly-rated real estate professionals.
         </p>
         <div className="agent-cards">
-          {topAgents.map(agent => (
+          {displayedAgents.map(agent => (
             <AgentCard key={agent.id} agent={agent} />
           ))}
         </div>
-        <button className="view-all-button">View All Agents</button>
+        <button className="view-all-button" onClick={handleViewMoreAgents}>
+          View All Agents
+        </button>
       </section>
 
       <section 
@@ -184,7 +198,6 @@ function Home() {
           ))}
         </div>
       </section>
-
     </div>
   );
 }
