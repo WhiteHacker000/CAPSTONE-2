@@ -79,8 +79,12 @@ function Navbar() {
           </div>
           
           <div className="auth-buttons">
-            <button className="sign-in">Sign In</button>
-            <button className="sign-up">Sign Up</button>
+            <Link to="/signin">
+              <button className="sign-in">Sign In</button>
+            </Link>
+            <Link to="/signup">
+              <button className="sign-up">Sign Up</button>
+            </Link>
           </div>
         </div>
         

@@ -10,6 +10,8 @@ import Agents from './components/Agents/Agents';
 import Notifications from './components/Notification/Notification';
 import Footer from './components/Footer/Footer';
 import { AuthProvider } from './contexts/AuthContext';
+import SignIn from './components/Auth/SignIn';
+import SignUp from './components/Auth/SignUp';
 import './App.css';
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
           <Route path="/properties/:id" element={<PropertyDetail />} />
           <Route path="/agents" element={<Agents />} />
           <Route path="/notifications" element={<Notifications />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
         </Routes>
         <Footer />
       </Router>
