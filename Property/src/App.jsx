@@ -7,25 +7,28 @@ import Contact from './components/Contact/Contact';
 import PropertyListing from './components/Property_Listing/Property_Listing';
 import PropertyDetail from './components/Property_Detail/Property_Detail';
 import Agents from './components/Agents/Agents';
-import Notifications from './components/Notification/Notification'; // Add this import
+import Notifications from './components/Notification/Notification';
 import Footer from './components/Footer/Footer';
+import { AuthProvider } from './contexts/AuthContext';
 import './App.css';
 
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/properties" element={<PropertyListing />} />
-        <Route path="/properties/:id" element={<PropertyDetail />} />
-        <Route path="/agents" element={<Agents />} />
-        <Route path="/notifications" element={<Notifications />} /> {/* Add this route */}
-      </Routes>
-      <Footer />
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/properties" element={<PropertyListing />} />
+          <Route path="/properties/:id" element={<PropertyDetail />} />
+          <Route path="/agents" element={<Agents />} />
+          <Route path="/notifications" element={<Notifications />} />
+        </Routes>
+        <Footer />
+      </Router>
+    </AuthProvider>
   );
 }
 
