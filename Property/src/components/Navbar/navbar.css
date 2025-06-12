@@ -149,26 +149,34 @@
 }
 
 .notification-icon {
-  font-size: 16px; /* Reduced from larger size */
-  color: #ca1d29b4;
-  cursor: pointer;
-  transition: color 0.2s ease;
+  font-size: 1.5rem;
+  color: #a0a0a0; /* Default grey color */
+  transition: color 0.3s ease;
+}
+
+.notification-icon:hover {
+  color: #2c3e50;
+}
+
+.notification-icon-read {
+  color: #294985; /* Darker Blue color when all notifications are read and deleted */
 }
 
 .notification-badge {
   position: absolute;
-  top: -8px;
-  right: -8px;
-  background-color: #e53e3e;
+  top: -5px;
+  right: -5px;
+  background-color: #e74c3c; /* Red for unread */
   color: white;
+  font-size: 0.7rem;
   border-radius: 50%;
-  width: 16px; /* Smaller badge size */
-  height: 16px; /* Smaller badge size */
+  padding: 3px 6px;
+  min-width: 18px;
+  text-align: center;
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 10px; /* Smaller font size */
-  font-weight: 600;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .notification-container:hover .notification-icon {

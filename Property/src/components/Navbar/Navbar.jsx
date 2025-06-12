@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaBell, FaUserCircle } from 'react-icons/fa';
+import { useNotification } from '../../contexts/NotificationContext';
 import './Navbar.css';
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { unreadCount, totalCount } = useNotification();
   
   // Handle scroll effect
   useEffect(() => {
@@ -73,8 +75,8 @@ function Navbar() {
         <div className="nav-actions">
           <div className="notification-container">
             <Link to="/notifications">
-              <FaBell className="notification-icon" />
-              <span className="notification-badge">3</span>
+              <FaBell className={`notification-icon ${unreadCount === 0 && totalCount === 0 ? 'notification-icon-read' : ''}`} />
+              {unreadCount > 0 && <span className="notification-badge">{unreadCount}</span>}
             </Link>
           </div>
           

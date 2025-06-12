@@ -1,71 +1,12 @@
 import React, { useState } from 'react';
 import { FaCheck, FaTrash, FaRegBell, FaFilter } from 'react-icons/fa';
+import { useNotification } from '../../contexts/NotificationContext';
 import './Notification.css';
 
 function Notification() {
-  const [notifications, setNotifications] = useState([
-    {
-      id: 1,
-      type: 'property',
-      title: 'New Property Verification',
-      message: 'Your property at 123 Main St has been successfully verified.',
-      time: '2 hours ago',
-      read: false,
-      icon: '🏠'
-    },
-    {
-      id: 2,
-      type: 'transaction',
-      title: 'Transaction Update',
-      message: 'Your offer for Mountain View Cottage has been accepted.',
-      time: '1 day ago',
-      read: false,
-      icon: '📝'
-    },
-    {
-      id: 3,
-      type: 'alert',
-      title: 'Price Drop Alert',
-      message: 'A property on your watchlist has dropped in price by 5%.',
-      time: '2 days ago',
-      read: false,
-      icon: '💰'
-    },
-    {
-      id: 4,
-      type: 'system',
-      title: 'System Update',
-      message: 'We\'ve updated our terms of service. Please review the changes.',
-      time: '1 week ago',
-      read: true,
-      icon: '⚙️'
-    },
-    {
-      id: 5,
-      type: 'transaction',
-      title: 'Document Signed',
-      message: 'Closing documents for 456 Oak Ave have been signed by all parties.',
-      time: '1 week ago',
-      read: true,
-      icon: '✍️'
-    }
-  ]);
+  const { notifications, unreadCount, markAsRead, markAllAsRead, deleteNotification } = useNotification();
 
   const [filter, setFilter] = useState('all');
-  
-  const markAsRead = (id) => {
-    setNotifications(notifications.map(notif => 
-      notif.id === id ? {...notif, read: true} : notif
-    ));
-  };
-  
-  const markAllAsRead = () => {
-    setNotifications(notifications.map(notif => ({...notif, read: true})));
-  };
-  
-  const deleteNotification = (id) => {
-    setNotifications(notifications.filter(notif => notif.id !== id));
-  };
   
   const filteredNotifications = filter === 'all' 
     ? notifications 
@@ -73,8 +14,6 @@ function Notification() {
       ? notifications.filter(notif => !notif.read)
       : notifications.filter(notif => notif.type === filter);
   
-  const unreadCount = notifications.filter(notif => !notif.read).length;
-
   return (
     <div className="notifications-page">
       <div className="notifications-header">
